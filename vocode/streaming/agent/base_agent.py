@@ -190,6 +190,7 @@ class RespondAgent(BaseAgent[AgentConfigType]):
         )
         is_first_response = True
         async for response in responses:
+            # print(response)
             if is_first_response:
                 agent_span_first.end()
                 is_first_response = False

@@ -8,6 +8,7 @@ load_dotenv()
 
 from vocode.streaming.streaming_conversation import StreamingConversation
 from vocode.helpers import create_streaming_microphone_input_and_speaker_output
+from vocode.streaming.agent import ChainAgent 
 from vocode.streaming.transcriber import *
 from vocode.streaming.agent import *
 from vocode.streaming.synthesizer import *
@@ -36,11 +37,14 @@ async def main():
                 endpointing_config=PunctuationEndpointingConfig(),
             )
         ),
-        agent=ChatGPTAgent(
-            ChatGPTAgentConfig(
-                initial_message=BaseMessage(text="What up"),
-                prompt_preamble="""The AI is having a pleasant conversation about life""",
-            )
+        # agent=ChatGPTAgent(
+        #     ChatGPTAgentConfig(
+        #         initial_message=BaseMessage(text="What up"),
+        #         prompt_preamble="""The AI is having a pleasant conversation about life""",
+        #     )
+        # ),
+        agent=ChainAgent(
+            AgentConfig(generate_responses=False, initial_message=BaseMessage(text="Hello can you hear me?"))
         ),
         synthesizer=AzureSynthesizer(
             AzureSynthesizerConfig.from_output_device(speaker_output)
